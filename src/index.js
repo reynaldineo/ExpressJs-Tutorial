@@ -8,6 +8,11 @@ const PORT = 3001;
 // call middleware
 app.use(express.json()); // to allow sending json to the server
 app.use(express.urlencoded()); // parsed to urlencoded, so it allow sendirg urlencoded to the server
+// simple custom middleware
+app.use((req, res, next) => {
+  console.log(`${req.method}:${req.url}`);
+  next(); // to continue to the next function
+});
 
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
 
