@@ -1,5 +1,7 @@
 // calling express
 const express = require("express");
+const groceriesRoute = require("./routes/groceries");
+const marketsRoute = require("./routes/markets");
 
 // making an express instance
 const app = express();
@@ -14,36 +16,8 @@ app.use((req, res, next) => {
   next(); // to continue to the next function
 });
 
+app.use("/api/v1/groceries", groceriesRoute);
+
+app.use("/api/v1/markets", marketsRoute);
+
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
-
-// mock database
-const groceryList = [
-  {
-    item: "milk",
-    quantity: 2,
-  },
-  {
-    item: "cereal",
-    quantity: 1,
-  },
-  {
-    item: "pop-tarts",
-    quantity: 1,
-  },
-];
-
-app.get("/groceries", (req, res) => {
-  res.send(groceryList);
-});
-
-app.get("/groceries/:item", (req, res) => {
-  const { item } = req.params;
-  const groceriesItem = groceryList.find((grocery) => grocery.item === item);
-  res.send(groceriesItem);
-});
-
-app.post("/groceries", (req, res) => {
-  console.log(req.body);
-  groceryList.push(req.body);
-  res.send(201);
-});
