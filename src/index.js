@@ -1,6 +1,7 @@
 // calling express
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const groceriesRoute = require("./routes/groceries");
 const marketsRoute = require("./routes/markets");
 
@@ -12,6 +13,13 @@ const PORT = 3001;
 app.use(express.json()); // to allow sending json to the server
 app.use(express.urlencoded()); // parsed to urlencoded, so it allow sendirg urlencoded to the server
 app.use(cookieParser()); // to allow using cookies
+app.use(
+  session({
+    secret: "POAPIWNEIQCNVBEJRWINWEOMZKWEOFMWOEOWFEN",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 // simple custom middleware
 app.use((req, res, next) => {
   console.log(`${req.method}:${req.url}`);
